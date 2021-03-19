@@ -32,9 +32,27 @@ class trainer : public person{
             training_types.push_back(t[i]);
     }
 
+    void add_experience(int e);
+
+    void add_day(string day);
+
+    void add_type(string type);
+
     int get_experience();
+
     vector < string > get_days();
+
     vector < string > get_types();
+
+    void check_day(string day);
+
+    void check_type(string type);
+
+    friend ostream& operator<< (ostream &cout, const trainer &t);
+
+    friend istream& operator>> (istream &cin, trainer &t);
+
+    trainer &operator=(const trainer &t);
 };
 
 #endif

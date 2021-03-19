@@ -32,8 +32,9 @@ class trainer : public person{
             training_types.push_back(t[i]);
     }
 
-
+    int get_experience();
+    vector < string > get_days();
+    vector < string > get_types();
 };
-
 
 #endif

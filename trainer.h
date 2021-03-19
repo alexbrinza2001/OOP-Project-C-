@@ -11,6 +11,8 @@ class trainer : public person{
     vector < string > days_available;
     vector < string > training_types;
 
+public:
+
     trainer()
     {
         person();

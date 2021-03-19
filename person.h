@@ -8,6 +8,8 @@ using namespace std;
 
 class person {
 
+protected:
+
     string first_name;
     string last_name;
     string gender;
@@ -50,6 +52,8 @@ public:
     string get_first_name();
 
     string get_last_name();
+
+    string get_gender();
 
     int get_age();
 

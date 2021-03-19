@@ -61,3 +61,45 @@ void trainer::check_type(string type)
     if(ok == 1) cout << "Trainer does this training.";
     else cout << "Trainer does not do this training.";
 }
+
+ostream& operator<< (ostream &cout, const trainer &t)
+{
+    cout << "Name: " << t.first_name << " " << t.last_name <<"\n";
+    cout << "Gender: " << t.gender << "\n";
+    cout << "Age: " << t.age << "\n";
+    cout << "Years of experience: " << t.experience << "\n";
+    cout << "Days available: ";
+    int s = t.days_available.size();
+    for(int i = 0; i < s; ++i) cout << t.days_available[i] << " ";
+    cout << "\n";
+    cout << "Training types: ";
+    s = t.training_types.size();
+    for(int i = 0; i < s; ++i) cout << t.training_types[i] << " ";
+    cout << "\n";
+
+    return cout;
+}
+
+trainer &trainer::operator=(const trainer &t)
+{
+    this->last_name = t.last_name;
+    this->first_name = t.first_name;
+    this->gender = t.gender;
+    this->age = t.age;
+    this->birth_date = t.birth_date;
+    this->residence = t.residence;
+    this->experience = t.experience;
+    int s = t.days_available.size();
+    for(int i = 0; i < s; ++i) this->days_available[i] = t.days_available[i];
+    s = t.training_types.size();
+    for(int i = 0; i < s; ++i) this->training_types[i] = t.training_types[i];
+
+    return *this;
+}
+
+istream& operator>> (istream &cin, trainer &t)
+{
+    cin >> t.first_name >> t.last_name >> t.gender >> t.age >> t.birth_date >> t.residence >> t.experience;
+
+    return cin;
+}

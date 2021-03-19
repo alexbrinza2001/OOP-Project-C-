@@ -27,6 +27,8 @@ string person::get_first_name() { return first_name; }
 
 string person::get_last_name() { return last_name; }
 
+string person::get_gender() {return gender;}
+
 int person::get_age() { return age; }
 
 date person::get_birth() { return birth_date; }

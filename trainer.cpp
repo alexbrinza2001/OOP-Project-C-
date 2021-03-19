@@ -90,9 +90,11 @@ trainer &trainer::operator=(const trainer &t)
     this->residence = t.residence;
     this->experience = t.experience;
     int s = t.days_available.size();
-    for(int i = 0; i < s; ++i) this->days_available[i] = t.days_available[i];
+    this->days_available.clear();
+    for(int i = 0; i < s; ++i) this->days_available.push_back(t.days_available[i]);
     s = t.training_types.size();
-    for(int i = 0; i < s; ++i) this->training_types[i] = t.training_types[i];
+    this->training_types.clear();
+    for(int i = 0; i < s; ++i) this->training_types.push_back(t.training_types[i]);
 
     return *this;
 }

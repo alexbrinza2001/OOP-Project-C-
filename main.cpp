@@ -20,10 +20,13 @@ int main()
     cin >> t;
     cin >> b;
     t.add_day(b);
-    //t.add_day("Friday");
-    //t.add_type("Arms");
-    //t.add_type("Trx");
+    t.add_day("Friday");
+    t.add_type("Arms");
+    t.add_type("Trx");
     s = t;
-    cout << s;
+    cout << s << "\n";
+    s.check_day("Monday");
+    cout << "\n";
+    s.check_day("Tuesday");
     return 0;
 }

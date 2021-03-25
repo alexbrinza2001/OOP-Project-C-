@@ -27,7 +27,7 @@ public:
         series = _series;
     }
 
-    void add_exercise(string _name, string _area, int _reps, int _series);
+    void set_exercise(string _name, string _area, int _reps, int _series);
 
     string get_name();
 

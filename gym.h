@@ -1,14 +1,19 @@
 #ifndef TEMA_GYM_H
 #define TEMA_GYM_H
 #include <iostream>
+#include <vector>
+#include <string>
 #include "location.h"
 #include "clock_time.h"
 using namespace std;
 
 class gym{
+    string name;
     location address;
     clock_time open_time;
     clock_time close_time;
+    vector < string > clients;
+    int space;
 
 public:
 
@@ -19,24 +24,40 @@ public:
         address.add_address("", 0);
         open_time.add_time(0, 0, 0);
         close_time.add_time(0, 0, 0);
+        space = 0;
+        name = "";
     }
 
-    gym(location _address, clock_time open, clock_time close)
+    gym(string _name, location _address, clock_time open, clock_time close, vector < string > _clients, int _space)
     {
-        address.add_country(_address.get_country());
-        address.add_city(_address.get_city());
-        address.add_address(_address.get_street(), _address.get_number());
-        open_time.add_time(open.get_hour(), open.get_minutes(), open.get_seconds());
-        close_time.add_time(close.get_hour(), close.get_minutes(), close.get_seconds());
+        name = _name;
+        address = _address;
+        open_time = open;
+        close_time = close;
+        clients.clear();
+        int s = _clients.size();
+        for(int i = 0; i < s; ++i)
+            clients.push_back(_clients[i]);
+        space = _space;
     }
 
-    void add_gym(location _address, clock_time open, clock_time close);
+    void set_gym(string _name, location _address, clock_time open, clock_time close, vector < string > _clients, int _space);
+
+    string get_name();
 
     location get_address();
 
     clock_time get_open();
 
     clock_time get_close();
+
+    int get_space();
+
+    void set_name(string _name);
+
+    void add_client(string client);
+
+    bool search_client(string client);
 
     friend ostream& operator<< (ostream &cout, const gym &g);
 

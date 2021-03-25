@@ -3,7 +3,7 @@
 #include <string>
 using namespace std;
 
-void exercise::add_exercise(string _name, string _area, int _reps, int _series)
+void exercise::set_exercise(string _name, string _area, int _reps, int _series)
 {
     name = _name;
     trained_area = _area;

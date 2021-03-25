@@ -6,7 +6,7 @@ using namespace std;
 
 void trainer::add_experience(int e)
 {
-    experience = e;
+    experience += e;
 }
 
 void trainer::add_day(string d)
@@ -34,7 +34,14 @@ vector < string > trainer::get_types()
     return training_types;
 }
 
-void trainer::check_day(string day)
+void trainer::set_price(int price)
+{
+    price_per_hour = price;
+}
+
+int trainer::get_price() {return price_per_hour;}
+
+bool trainer::check_day(string day)
 {
     int ok = 0;
     int s = days_available.size();
@@ -44,11 +51,11 @@ void trainer::check_day(string day)
             ok = 1;
             break;
         }
-    if(ok == 1) cout << "Trainer is available.";
-    else cout << "Trainer is not available.";
+
+    return ok;
 }
 
-void trainer::check_type(string type)
+bool trainer::check_type(string type)
 {
     int ok = 0;
     int s = training_types.size();
@@ -58,9 +65,11 @@ void trainer::check_type(string type)
             ok = 1;
             break;
         }
-    if(ok == 1) cout << "Trainer does this training.";
-    else cout << "Trainer does not do this training.";
+
+    return ok;
 }
+
+string trainer::get_gym() {return gym_name;}
 
 ostream& operator<< (ostream &cout, const trainer &t)
 {
@@ -68,6 +77,7 @@ ostream& operator<< (ostream &cout, const trainer &t)
     cout << "Gender: " << t.gender << "\n";
     cout << "Age: " << t.age << "\n";
     cout << "Years of experience: " << t.experience << "\n";
+    cout << "Price per hour: " << t.price_per_hour << "\n";
     cout << "Days available: ";
     int s = t.days_available.size();
     for(int i = 0; i < s; ++i) cout << t.days_available[i] << " ";
@@ -76,6 +86,7 @@ ostream& operator<< (ostream &cout, const trainer &t)
     s = t.training_types.size();
     for(int i = 0; i < s; ++i) cout << t.training_types[i] << " ";
     cout << "\n";
+    cout << "Works at: " << t.gym_name;
 
     return cout;
 }
@@ -89,19 +100,21 @@ trainer &trainer::operator=(const trainer &t)
     this->birth_date = t.birth_date;
     this->residence = t.residence;
     this->experience = t.experience;
+    this->price_per_hour = t.price_per_hour;
     int s = t.days_available.size();
     this->days_available.clear();
     for(int i = 0; i < s; ++i) this->days_available.push_back(t.days_available[i]);
     s = t.training_types.size();
     this->training_types.clear();
     for(int i = 0; i < s; ++i) this->training_types.push_back(t.training_types[i]);
+    this->gym_name = t.gym_name;
 
     return *this;
 }
 
 istream& operator>> (istream &cin, trainer &t)
 {
-    cin >> t.first_name >> t.last_name >> t.gender >> t.age >> t.birth_date >> t.residence >> t.experience;
+    cin >> t.first_name >> t.last_name >> t.gender >> t.age >> t.birth_date >> t.residence >> t.experience >> t.price_per_hour >> t.gym_name;
 
     return cin;
 }

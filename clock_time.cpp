@@ -17,7 +17,11 @@ int clock_time::get_seconds() {return seconds;}
 
 ostream& operator<< (ostream &cout, const clock_time &time)
 {
-    cout << "Ora " << time.hour << ":" << time.minutes << ":" << time.seconds;
+    cout << "Ora " << time.hour << ":";
+    if(time.minutes < 10)
+        cout << 0 << time.minutes << ":";
+    if(time.seconds < 10)
+        cout << 0 << time.seconds;
     return cout;
 }
 

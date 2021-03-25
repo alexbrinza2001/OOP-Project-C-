@@ -33,10 +33,8 @@ public:
         last_name = _last;
         gender = _gender;
         age = _age;
-        birth_date.add_date(_birth.get_day(), _birth.get_month(), _birth.get_year());
-        residence.add_country(_residence.get_country());
-        residence.add_city(_residence.get_city());
-        residence.add_address(_residence.get_street(), _residence.get_number());
+        birth_date = _birth;
+        residence = _residence;
     }
 
     void add_name(string first, string last);

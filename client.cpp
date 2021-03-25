@@ -32,6 +32,11 @@ string client::get_city() {return city;};
 
 vector < string > client::get_days() {return days_available;}
 
+void client::remove_days()
+{
+    days_available.clear();
+}
+
 ostream& operator<< (ostream &cout, const client &c)
 {
     cout << "Name: " << c.first_name << " " << c.last_name << "\n";

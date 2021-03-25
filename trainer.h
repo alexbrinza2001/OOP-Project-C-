@@ -56,6 +56,10 @@ public:
 
     int get_price();
 
+    void clear_days();
+
+    void clear_types();
+
     vector < string > get_days();
 
     vector < string > get_types();

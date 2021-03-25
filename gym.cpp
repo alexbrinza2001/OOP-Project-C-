@@ -34,6 +34,11 @@ void gym::add_client(string client)
     clients.push_back(client);
 }
 
+void gym::remove_clients()
+{
+    clients.clear();
+}
+
 bool gym::search_client(string client)
 {
     int s = clients.size();
@@ -51,6 +56,7 @@ ostream& operator<< (ostream &cout, const gym &g)
     cout << "Client list: ";
     for(int i = 0; i < g.clients.size(); ++i)
         cout << g.clients[i] << " ";
+    cout << "\n";
 
     return cout;
 }

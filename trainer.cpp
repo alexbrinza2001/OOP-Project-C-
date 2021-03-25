@@ -55,6 +55,16 @@ bool trainer::check_day(string day)
     return ok;
 }
 
+void trainer::clear_days()
+{
+    days_available.clear();
+}
+
+void trainer::clear_types()
+{
+    training_types.clear();
+}
+
 bool trainer::check_type(string type)
 {
     int ok = 0;
@@ -87,6 +97,7 @@ ostream& operator<< (ostream &cout, const trainer &t)
     for(int i = 0; i < s; ++i) cout << t.training_types[i] << " ";
     cout << "\n";
     cout << "Works at: " << t.gym_name;
+    cout << "\n";
 
     return cout;
 }

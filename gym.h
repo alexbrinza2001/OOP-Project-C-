@@ -41,9 +41,23 @@ public:
         space = _space;
     }
 
+    ~gym()
+    {
+        address.add_country("");
+        address.add_city("");
+        address.add_address("", 0);
+        open_time.add_time(0, 0, 0);
+        close_time.add_time(0, 0, 0);
+        space = 0;
+        name = "";
+        clients.clear();
+    }
+
     void set_gym(string _name, location _address, clock_time open, clock_time close, vector < string > _clients, int _space);
 
     string get_name();
+
+    void remove_clients();
 
     location get_address();
 

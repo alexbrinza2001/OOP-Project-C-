@@ -34,6 +34,8 @@ public:
         days_available.clear();
     }
 
+    void remove_days();
+
     void set_first_name(string first);
 
     void set_last_name(string last);

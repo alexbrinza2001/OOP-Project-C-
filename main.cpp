@@ -28,6 +28,8 @@ void initialize_data(vector < gym > &gym_list, vector < trainer > &trainer_list)
         }
 
         gym_list.push_back(gym_data);
+
+        gym_data.remove_clients();
     }
 
     cin >> trainer_number;
@@ -47,6 +49,11 @@ void initialize_data(vector < gym > &gym_list, vector < trainer > &trainer_list)
             cin >> type;
             trainer_data.add_type(type);
         }
+
+        trainer_list.push_back(trainer_data);
+        trainer_data.clear_days();
+        trainer_data.clear_types();
+
     }
 }
 
@@ -67,7 +74,9 @@ void read_clients(vector < client > &clients)
             cin >> day;
             client_data.add_day(day);
         }
+
         clients.push_back(client_data);
+        client_data.remove_days();
     }
 }
 
@@ -98,19 +107,19 @@ void find_trainer(vector < client > clients, vector < trainer > trainer_list)
 
         if(ok == 0)
         {
-            cout << "Client number " << i + 1 << "did not find any trainer." << "\n";
+            cout << clients[i].get_first_name() << " " << clients[i].get_last_name() << " did not find any trainer." << "\n";
             continue;
         }
 
         sort(possible_trainers.begin(), possible_trainers.end(), comp1);
 
-        cout << "Client number " << i + 1 << "chose " << possible_trainers[0].get_first_name() << " " << possible_trainers[0].get_last_name() << " as a trainer." << "\n";
+        cout << clients[i].get_first_name() << " " << clients[i].get_last_name() << " chose " << possible_trainers[0].get_first_name() << " " << possible_trainers[0].get_last_name() << " as a trainer." << "\n";
     }
 }
 
 bool comp2(gym A, gym B)
 {
-    return A.get_space() < B.get_space();
+    return A.get_space() > B.get_space();
 }
 
 void find_gym(vector < client > clients, vector < gym > gym_list)
@@ -131,13 +140,13 @@ void find_gym(vector < client > clients, vector < gym > gym_list)
 
         if(ok == 0)
         {
-            cout << "Client number " << i + 1 << "did not find any gym" << "\n";
+            cout << clients[i].get_first_name() << " " << clients[i].get_last_name() << " did not find any gym" << "\n";
             continue;
         }
 
         sort(possible_gyms.begin(), possible_gyms.end(), comp2);
 
-        cout << "Client number " << i + 1 << "chose " << possible_gyms[0].get_name() << "as their gym." << "\n";
+        cout << clients[i].get_first_name() << " " << clients[i].get_last_name() << " chose " << possible_gyms[0].get_name() << " as their gym." << "\n";
     }
 }
 
@@ -150,6 +159,18 @@ int main()
 
     initialize_data(gym_list, trainer_list);
     read_clients(clients);
+
+    /*for(int i = 0; i < gym_list.size(); ++i)
+        cout << gym_list[i] << " ";
+    cout << "\n";
+
+    for(int i = 0; i < trainer_list.size(); ++i)
+        cout << trainer_list[i] << " ";
+    cout << "\n";
+
+    for(int i = 0; i < clients.size(); ++i)
+        cout << clients[i] << " ";
+    cout << "\n";*/
 
     cin >> task;
     if(task == 1) find_trainer(clients, trainer_list);

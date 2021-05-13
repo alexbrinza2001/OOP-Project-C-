@@ -1,2 +1,2 @@
-# Tema1 Laborator POO
+# Tema Laborator POO
 Brînză Tudor-Alexandru Grupa 151

@@ -11,6 +11,9 @@
 #include "exercise.h"
 #include "trainer.h"
 #include "client.h"
+#include "boutique_gym.h"
+#include "crossfit_gym.h"
+#include "powerlifting_gym.h"
 
 ifstream in("input");
 
@@ -156,7 +159,7 @@ void find_gym(vector < client > clients, vector < gym > gym_list)
     }
 }
 
-char sfat[105];
+string gym_type;
 
 int main()
 {
@@ -171,22 +174,44 @@ int main()
     for(int i = 0; i < gym_list.size(); ++i)
         cout << gym_list[i] << " ";
     cout << "\n";
-
     for(int i = 0; i < trainer_list.size(); ++i)
         cout << trainer_list[i] << " ";
     cout << "\n";
-
     for(int i = 0; i < clients.size(); ++i)
         cout << clients[i] << " ";
     cout << "\n";
 */
     in >> task;
     if(task == 1) find_trainer(clients, trainer_list);
-    else find_gym(clients, gym_list);
+    if(task == 2) find_gym(clients, gym_list);
+    if(task == 3)
+    {
+        in >> gym_type;
 
-    cin.getline(sfat, 105);
+        if(gym_type == "Boutique")
+        {
+            gym* g;
+            boutique_gym b;
+            g = &b;
+            g->pros_and_cons();
+        }
 
-    cout << sfat;
+        if(gym_type == "Crossfit")
+        {
+            gym* g;
+            crossfit_gym b;
+            g = &b;
+            g->pros_and_cons();
+        }
+
+        if(gym_type == "Powerlifting")
+        {
+            gym* g;
+            powerlifting_gym b;
+            g = &b;
+            g->pros_and_cons();
+        }
+    }
 
     return 0;
 }

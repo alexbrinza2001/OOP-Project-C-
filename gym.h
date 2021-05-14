@@ -14,6 +14,7 @@ class gym{
     clock_time close_time;
     vector < string > clients;
     int space;
+    int membership_price = 130;
 
 public:
 
@@ -78,6 +79,12 @@ public:
     friend istream& operator>> (istream &cin, gym &g);
 
     gym &operator=(const gym &g);
+
+    virtual void total_income();
+
+    void change_membership_price(int new_price);
+
+    virtual void pros_and_cons();
 
 };
 

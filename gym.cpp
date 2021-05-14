@@ -80,3 +80,29 @@ gym &gym::operator=(const gym &g)
         this->clients.push_back(g.clients[i]);
     return *this;
 }
+
+void gym :: total_income()
+{
+    int total = 0;
+
+    total = clients.size() * membership_price;
+
+    cout << "The gym " << name << " " << "has a total income of " << total << " ron" << "\n";
+
+}
+
+void gym :: change_membership_price(int new_price)
+{
+    membership_price = new_price;
+}
+
+void gym :: pros_and_cons()
+{
+    cout << "Pros:" << "\n";
+    cout << "A gym membership grants access to a variety of high-quality exercise equipment. From weight machines and dumbbells, to ellipticals and Stairmasters, there’s everything you need to kick start your fitness journey. " << "\n";
+    cout << "Gyms are full of fitness professionals ready and able to provide expert training. If you’re new to exercising, they’re full of knowledge you can tap into that goes well beyond the gym. Not only do they offer workout advice, some can provide tips about healthy eating. Trainers are a built-in support system and can be a valuable resource." << "\n";
+    cout << "Exercise classes are a great way to socialize and break a sweat. Classes are fun, engaging, and full of energy. They provide a structured environment that allows you to learn something new alongside your peers. You can meet your fitness goals through dance, yoga, kickboxing, Pilates, and more." << "\n";
+    cout << "Cons:" << "\n";
+    cout << "Lack of transportation could keep you from the gym and your fitness goals. Public transit is an alternative but it may put a dent in your bank account. There’s also the weather, which can be an unpredictable distraction. It’s hard to stay motivated with six feet of snow outside your door." << "\n";
+    cout << "A gym is a communal space where everyone is expected to train in peace. That’s hard to do when there’s no equipment available. Or when your favorite class is full. Overcrowding can be an annoyance that dampens your entire experience. Unfortunately, there are only two solutions: adjust your schedule or move to a different facility." << "\n";
+}

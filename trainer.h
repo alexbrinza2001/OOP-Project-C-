@@ -2,6 +2,7 @@
 #define TEMA_TRAINER_H
 #include "person.h"
 #include "gym.h"
+#include "client.h"
 #include <string>
 #include <vector>
 using namespace std;
@@ -12,7 +13,9 @@ class trainer : public person{
     int price_per_hour;
     vector < string > days_available;
     vector < string > training_types;
+    vector < client > client_list;
     string gym_name;
+    static const int client_limit = 3;
 
 public:
 
@@ -56,6 +59,8 @@ public:
 
     int get_price();
 
+    int get_client_limit();
+
     void clear_days();
 
     void clear_types();
@@ -75,6 +80,10 @@ public:
     friend istream& operator>> (istream &cin, trainer &t);
 
     trainer &operator=(const trainer &t);
+
+    void add_client(client c);
+
+    int get_client_count();
 };
 
 #endif

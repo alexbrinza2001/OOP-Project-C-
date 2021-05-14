@@ -96,6 +96,7 @@ bool comp1(trainer A, trainer B)
 
 void find_trainer(vector < client > clients, vector < trainer > trainer_list)
 {
+    bool gasit;
     vector < trainer > possible_trainers;
 
     for(int i = 0; i < clients.size(); ++i)
@@ -122,7 +123,38 @@ void find_trainer(vector < client > clients, vector < trainer > trainer_list)
 
         sort(possible_trainers.begin(), possible_trainers.end(), comp1);
 
-        cout << clients[i].get_first_name() << " " << clients[i].get_last_name() << " chose " << possible_trainers[0].get_first_name() << " " << possible_trainers[0].get_last_name() << " as a trainer." << "\n";
+        gasit = 0;
+
+        try
+        {
+            for(int i = 0; i < possible_trainers.size(); ++i)
+            {
+                int limit = possible_trainers[i].get_client_limit();
+                int client_count = possible_trainers[i].get_client_count();
+
+                if(client_count == limit) continue;
+                else
+                {
+                    gasit = 1;
+                    throw i;
+                    break;
+                }
+            }
+
+            throw gasit;
+        }
+
+        catch(int counter)
+        {
+            cout << clients[i].get_first_name() << " " << clients[i].get_last_name() << " chose " << possible_trainers[counter].get_first_name() << " " << possible_trainers[counter].get_last_name() << " as a trainer." << "\n";
+            possible_trainers[counter].add_client(clients[i]);
+        }
+
+        catch(bool found)
+        {
+            if(found == 0)
+                cout << clients[i].get_first_name() << " " << clients[i].get_last_name() << " did not find any trainer." << "\n";
+        }
     }
 }
 
@@ -159,7 +191,36 @@ void find_gym(vector < client > clients, vector < gym > gym_list)
     }
 }
 
-string gym_type;
+void gym_advice()
+{
+    string gym_type;
+
+    in >> gym_type;
+
+    if(gym_type == "Boutique")
+    {
+        gym* g;
+        boutique_gym b;
+        g = &b;
+        g->pros_and_cons();
+    }
+
+    if(gym_type == "Crossfit")
+    {
+        gym* g;
+        crossfit_gym b;
+        g = &b;
+        g->pros_and_cons();
+    }
+
+    if(gym_type == "Powerlifting")
+    {
+        gym* g;
+        powerlifting_gym b;
+        g = &b;
+        g->pros_and_cons();
+    }
+}
 
 int main()
 {
@@ -184,34 +245,7 @@ int main()
     in >> task;
     if(task == 1) find_trainer(clients, trainer_list);
     if(task == 2) find_gym(clients, gym_list);
-    if(task == 3)
-    {
-        in >> gym_type;
-
-        if(gym_type == "Boutique")
-        {
-            gym* g;
-            boutique_gym b;
-            g = &b;
-            g->pros_and_cons();
-        }
-
-        if(gym_type == "Crossfit")
-        {
-            gym* g;
-            crossfit_gym b;
-            g = &b;
-            g->pros_and_cons();
-        }
-
-        if(gym_type == "Powerlifting")
-        {
-            gym* g;
-            powerlifting_gym b;
-            g = &b;
-            g->pros_and_cons();
-        }
-    }
+    if(task == 3) gym_advice();
 
     return 0;
 }

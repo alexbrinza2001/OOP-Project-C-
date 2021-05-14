@@ -1,5 +1,6 @@
 #include "person.h"
 #include "trainer.h"
+#include "client.h"
 #include <iostream>
 #include <string>
 using namespace std;
@@ -22,6 +23,11 @@ void trainer::add_type(string t)
 int trainer::get_experience()
 {
     return experience;
+}
+
+int trainer :: get_client_limit()
+{
+    return client_limit;
 }
 
 vector < string > trainer::get_days()
@@ -128,4 +134,14 @@ istream& operator>> (istream &cin, trainer &t)
     cin >> t.first_name >> t.last_name >> t.gender >> t.age >> t.birth_date >> t.residence >> t.experience >> t.price_per_hour >> t.gym_name;
 
     return cin;
+}
+
+void trainer::add_client(client c)
+{
+    client_list.push_back(c);
+}
+
+int trainer::get_client_count()
+{
+    return client_list.size();
 }

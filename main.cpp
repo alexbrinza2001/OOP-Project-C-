@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include <string>
 #include <algorithm>
@@ -11,6 +12,8 @@
 #include "trainer.h"
 #include "client.h"
 
+ifstream in("input");
+
 void initialize_data(vector < gym > &gym_list, vector < trainer > &trainer_list)
 {
     gym gym_data;
@@ -18,15 +21,15 @@ void initialize_data(vector < gym > &gym_list, vector < trainer > &trainer_list)
     string client, day, type;
     trainer trainer_data;
 
-    cin >> gym_number;
+    in >> gym_number;
 
     for(int i = 0; i < gym_number; ++i)
     {
-        cin >> gym_data;
-        cin >> client_number;
+        in >> gym_data;
+        in >> client_number;
         for(int j = 0; j < client_number; ++j)
         {
-            cin >> client;
+            in >> client;
             gym_data.add_client(client);
         }
 
@@ -35,21 +38,21 @@ void initialize_data(vector < gym > &gym_list, vector < trainer > &trainer_list)
         gym_data.remove_clients();
     }
 
-    cin >> trainer_number;
+    in >> trainer_number;
 
     for(int i = 0; i < trainer_number; ++i)
     {
-        cin >> trainer_data;
-        cin >> days_number;
+        in >> trainer_data;
+        in >> days_number;
         for(int j = 0; j < days_number; ++j)
         {
-            cin >> day;
+            in >> day;
             trainer_data.add_day(day);
         }
-        cin >> types_number;
+        in >> types_number;
         for(int j = 0; j < types_number; ++j)
         {
-            cin >> type;
+            in >> type;
             trainer_data.add_type(type);
         }
 
@@ -66,15 +69,15 @@ void read_clients(vector < client > &clients)
     int days_number, client_count;
     string day;
 
-    cin >> client_count;
+    in >> client_count;
 
     for(int i = 0; i < client_count; ++i)
     {
-        cin >> client_data;
-        cin >> days_number;
+        in >> client_data;
+        in >> days_number;
         for(int i = 0; i < days_number; ++i)
         {
-            cin >> day;
+            in >> day;
             client_data.add_day(day);
         }
 
@@ -153,6 +156,8 @@ void find_gym(vector < client > clients, vector < gym > gym_list)
     }
 }
 
+char sfat[105];
+
 int main()
 {
     vector < gym > gym_list;
@@ -162,8 +167,8 @@ int main()
 
     initialize_data(gym_list, trainer_list);
     read_clients(clients);
-
-    /*for(int i = 0; i < gym_list.size(); ++i)
+/*
+    for(int i = 0; i < gym_list.size(); ++i)
         cout << gym_list[i] << " ";
     cout << "\n";
 
@@ -173,11 +178,15 @@ int main()
 
     for(int i = 0; i < clients.size(); ++i)
         cout << clients[i] << " ";
-    cout << "\n";*/
-
-    cin >> task;
+    cout << "\n";
+*/
+    in >> task;
     if(task == 1) find_trainer(clients, trainer_list);
     else find_gym(clients, gym_list);
+
+    cin.getline(sfat, 105);
+
+    cout << sfat;
 
     return 0;
 }

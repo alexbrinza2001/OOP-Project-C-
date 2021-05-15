@@ -17,9 +17,9 @@
 
 ifstream in("input");
 
-void initialize_data(vector < gym > &gym_list, vector < trainer > &trainer_list)
+void initialize_data(vector < gym * > &gym_list, vector < trainer > &trainer_list)
 {
-    gym gym_data;
+    string gym_type;
     int client_number, days_number, types_number, gym_number, trainer_number;
     string client, day, type;
     trainer trainer_data;
@@ -28,17 +28,24 @@ void initialize_data(vector < gym > &gym_list, vector < trainer > &trainer_list)
 
     for(int i = 0; i < gym_number; ++i)
     {
-        in >> gym_data;
-        in >> client_number;
-        for(int j = 0; j < client_number; ++j)
+        in >> gym_type;
+
+        if(gym_type == "Boutique")
         {
-            in >> client;
-            gym_data.add_client(client);
+            boutique_gym gym_data;
+
+            in >> gym_data;
+            in >> client_number;
+            for(int j = 0; j < client_number; ++j)
+            {
+                in >> client;
+                gym_data.add_client(client);
+            }
+
+            gym * pointer = &gym_data;
+            gym_list.push_back(pointer);
+
         }
-
-        gym_list.push_back(gym_data);
-
-        gym_data.remove_clients();
     }
 
     in >> trainer_number;
@@ -137,7 +144,6 @@ void find_trainer(vector < client > clients, vector < trainer > trainer_list)
                 {
                     gasit = 1;
                     throw i;
-                    break;
                 }
             }
 
@@ -224,14 +230,14 @@ void gym_advice()
 
 int main()
 {
-    vector < gym > gym_list;
+    vector < gym * > gym_list;
     vector < trainer > trainer_list;
     vector < client > clients;
     int task;
 
     initialize_data(gym_list, trainer_list);
     read_clients(clients);
-/*
+
     for(int i = 0; i < gym_list.size(); ++i)
         cout << gym_list[i] << " ";
     cout << "\n";
@@ -241,7 +247,6 @@ int main()
     for(int i = 0; i < clients.size(); ++i)
         cout << clients[i] << " ";
     cout << "\n";
-*/
     in >> task;
     if(task == 1) find_trainer(clients, trainer_list);
     if(task == 2) find_gym(clients, gym_list);

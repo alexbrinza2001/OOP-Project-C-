@@ -16,8 +16,6 @@
 #include "powerlifting_gym.h"
 #include <memory>
 
-ifstream in("input");
-
 struct too_many_clients : public exception
 {
     const char * what () const throw ()
@@ -26,7 +24,7 @@ struct too_many_clients : public exception
     }
 };
 
-void initialize_data(vector< unique_ptr < gym > > &gym_list, vector < trainer > &trainer_list)
+void initialize_data(ifstream &in, vector< unique_ptr < gym > > &gym_list, vector < trainer > &trainer_list)
 {
     string gym_type;
     int client_number, days_number, types_number, gym_number, trainer_number;
@@ -116,7 +114,7 @@ void initialize_data(vector< unique_ptr < gym > > &gym_list, vector < trainer > 
     }
 }
 
-void read_clients(vector < client > &clients)
+void read_clients(ifstream &in, vector < client > &clients)
 {
     client client_data;
     int days_number, client_count;
@@ -226,7 +224,7 @@ void find_gym(vector < client > clients, vector< unique_ptr < gym > > &gym_list)
     }
 }
 
-void gym_advice(vector< unique_ptr < gym > > &gym_list)
+void gym_advice(ifstream &in, vector< unique_ptr < gym > > &gym_list)
 {
     string gym_name;
 
@@ -243,13 +241,14 @@ void gym_advice(vector< unique_ptr < gym > > &gym_list)
 
 int main()
 {
+    ifstream in("input");
     vector< unique_ptr < gym > > gym_list;
     vector < trainer > trainer_list;
     vector < client > clients;
     int task;
 
-    initialize_data(gym_list, trainer_list);
-    read_clients(clients);
+    initialize_data(in, gym_list, trainer_list);
+    read_clients(in, clients);
 
     /*for(int i = 0; i < gym_list.size(); ++i)
         cout << *gym_list[i] << " ";
@@ -264,7 +263,7 @@ int main()
     in >> task;
     if(task == 1) find_trainer(clients, trainer_list);
     if(task == 2) find_gym(clients, gym_list);
-    if(task == 3) gym_advice(gym_list);
+    if(task == 3) gym_advice(in, gym_list);
 
     return 0;
 }

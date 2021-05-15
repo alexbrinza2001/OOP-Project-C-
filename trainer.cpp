@@ -88,25 +88,25 @@ bool trainer::check_type(string type)
 
 string trainer::get_gym() {return gym_name;}
 
-ostream& operator<< (ostream &cout, const trainer &t)
+ostream& operator<< (ostream &os, const trainer &t)
 {
-    cout << "Name: " << t.first_name << " " << t.last_name <<"\n";
-    cout << "Gender: " << t.gender << "\n";
-    cout << "Age: " << t.age << "\n";
-    cout << "Years of experience: " << t.experience << "\n";
-    cout << "Price per hour: " << t.price_per_hour << "\n";
-    cout << "Days available: ";
+    os << "Name: " << t.first_name << " " << t.last_name <<"\n";
+    os << "Gender: " << t.gender << "\n";
+    os << "Age: " << t.age << "\n";
+    os << "Years of experience: " << t.experience << "\n";
+    os << "Price per hour: " << t.price_per_hour << "\n";
+    os << "Days available: ";
     int s = t.days_available.size();
     for(int i = 0; i < s; ++i) cout << t.days_available[i] << " ";
-    cout << "\n";
-    cout << "Training types: ";
+    os << "\n";
+    os << "Training types: ";
     s = t.training_types.size();
     for(int i = 0; i < s; ++i) cout << t.training_types[i] << " ";
-    cout << "\n";
-    cout << "Works at: " << t.gym_name;
-    cout << "\n";
+    os << "\n";
+    os << "Works at: " << t.gym_name;
+    os << "\n";
 
-    return cout;
+    return os;
 }
 
 trainer &trainer::operator=(const trainer &t)
@@ -130,11 +130,11 @@ trainer &trainer::operator=(const trainer &t)
     return *this;
 }
 
-istream& operator>> (istream &cin, trainer &t)
+istream& operator>> (istream &is, trainer &t)
 {
-    cin >> t.first_name >> t.last_name >> t.gender >> t.age >> t.birth_date >> t.residence >> t.experience >> t.price_per_hour >> t.gym_name;
+    is >> t.first_name >> t.last_name >> t.gender >> t.age >> t.birth_date >> t.residence >> t.experience >> t.price_per_hour >> t.gym_name;
 
-    return cin;
+    return is;
 }
 
 void trainer::add_client(client c)

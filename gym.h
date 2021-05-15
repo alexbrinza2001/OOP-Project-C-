@@ -15,6 +15,7 @@ class gym{
     vector < string > clients;
     int space;
     int membership_price = 130;
+    static const int client_limit = 20;
 
 public:
 

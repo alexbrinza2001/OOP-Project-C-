@@ -138,6 +138,9 @@ istream& operator>> (istream &cin, trainer &t)
 
 void trainer::add_client(client c)
 {
+    if(client_list.size() == client_limit)
+        throw false;
+
     client_list.push_back(c);
 }
 

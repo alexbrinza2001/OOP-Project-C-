@@ -31,6 +31,9 @@ int gym::get_space() {return space;}
 
 void gym::add_client(string client)
 {
+    if(clients.size() == client_limit)
+        throw false;
+
     clients.push_back(client);
 }
 

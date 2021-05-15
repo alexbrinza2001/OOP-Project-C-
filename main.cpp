@@ -14,6 +14,7 @@
 #include "boutique_gym.h"
 #include "crossfit_gym.h"
 #include "powerlifting_gym.h"
+#include <memory>
 
 ifstream in("input");
 
@@ -30,21 +31,55 @@ void initialize_data(vector < gym * > &gym_list, vector < trainer > &trainer_lis
     {
         in >> gym_type;
 
-        if(gym_type == "Boutique")
-        {
-            boutique_gym gym_data;
+        try {
+            if (gym_type == "Boutique") {
+                boutique_gym gym_data;
 
-            in >> gym_data;
-            in >> client_number;
-            for(int j = 0; j < client_number; ++j)
-            {
-                in >> client;
-                gym_data.add_client(client);
+                in >> gym_data;
+                in >> client_number;
+
+                for (int j = 0; j < client_number; ++j) {
+                    in >> client;
+                    gym_data.add_client(client);
+                }
+
+                gym *pointer = &gym_data;
+                gym_list.push_back(pointer);
             }
 
-            gym * pointer = &gym_data;
-            gym_list.push_back(pointer);
+            if (gym_type == "Crossfit") {
+                crossfit_gym gym_data;
 
+                in >> gym_data;
+                in >> client_number;
+
+                for (int j = 0; j < client_number; ++j) {
+                    in >> client;
+                    gym_data.add_client(client);
+                }
+
+                gym *pointer = &gym_data;
+                gym_list.push_back(pointer);
+            }
+
+            if (gym_type == "Powerlifting") {
+                powerlifting_gym gym_data;
+
+                in >> gym_data;
+                in >> client_number;
+
+                for (int j = 0; j < client_number; ++j) {
+                    in >> client;
+                    gym_data.add_client(client);
+                }
+
+                gym *pointer = &gym_data;
+                gym_list.push_back(pointer);
+            }
+        }
+        catch(exception &e)
+        {
+            cout << e.what() << "\n";
         }
     }
 
@@ -134,44 +169,24 @@ void find_trainer(vector < client > clients, vector < trainer > trainer_list)
 
         try
         {
-            for(int i = 0; i < possible_trainers.size(); ++i)
-            {
-                int limit = possible_trainers[i].get_client_limit();
-                int client_count = possible_trainers[i].get_client_count();
-
-                if(client_count == limit) continue;
-                else
-                {
-                    gasit = 1;
-                    throw i;
-                }
-            }
-
-            throw gasit;
+            possible_trainers[0].add_client( clients[i]);
         }
-
-        catch(int counter)
+        catch(exception &e)
         {
-            cout << clients[i].get_first_name() << " " << clients[i].get_last_name() << " chose " << possible_trainers[counter].get_first_name() << " " << possible_trainers[counter].get_last_name() << " as a trainer." << "\n";
-            possible_trainers[counter].add_client(clients[i]);
+            cout << e.what() << "\n";
         }
 
-        catch(bool found)
-        {
-            if(found == 0)
-                cout << clients[i].get_first_name() << " " << clients[i].get_last_name() << " did not find any trainer." << "\n";
-        }
     }
 }
 
-bool comp2(gym A, gym B)
+bool comp2(gym * A, gym * B)
 {
-    return A.get_space() > B.get_space();
+    return A->get_space() > B->get_space();
 }
 
-void find_gym(vector < client > clients, vector < gym > gym_list)
+void find_gym(vector < client > clients, vector < gym * > gym_list)
 {
-    vector < gym > possible_gyms;
+    vector < gym * > possible_gyms;
 
     for(int i = 0; i < clients.size(); ++i)
     {
@@ -179,7 +194,7 @@ void find_gym(vector < client > clients, vector < gym > gym_list)
         possible_gyms.clear();
 
         for(int j = 0; j < gym_list.size(); ++j)
-            if(clients[i].get_city() == gym_list[j].get_address().get_city())
+            if(clients[i].get_city() == gym_list[j]->get_address().get_city())
             {
                 ok = 1;
                 possible_gyms.push_back(gym_list[j]);
@@ -193,39 +208,22 @@ void find_gym(vector < client > clients, vector < gym > gym_list)
 
         sort(possible_gyms.begin(), possible_gyms.end(), comp2);
 
-        cout << clients[i].get_first_name() << " " << clients[i].get_last_name() << " chose " << possible_gyms[0].get_name() << " as their gym." << "\n";
+        cout << clients[i].get_first_name() << " " << clients[i].get_last_name() << " chose " << possible_gyms[0]->get_name() << " as their gym." << "\n";
     }
 }
 
-void gym_advice()
+void gym_advice(vector < gym * > gym_list)
 {
-    string gym_type;
+    string gym_name;
 
-    in >> gym_type;
+    in >> gym_name;
 
-    if(gym_type == "Boutique")
-    {
-        gym* g;
-        boutique_gym b;
-        g = &b;
-        g->pros_and_cons();
-    }
-
-    if(gym_type == "Crossfit")
-    {
-        gym* g;
-        crossfit_gym b;
-        g = &b;
-        g->pros_and_cons();
-    }
-
-    if(gym_type == "Powerlifting")
-    {
-        gym* g;
-        powerlifting_gym b;
-        g = &b;
-        g->pros_and_cons();
-    }
+    for(int i = 0; i < gym_list.size(); ++i)
+        if(gym_list[i]->get_name() == gym_name)
+        {
+            gym_list[i]->pros_and_cons();
+            break;
+        }
 }
 
 int main()
@@ -239,6 +237,9 @@ int main()
     read_clients(clients);
 
     for(int i = 0; i < gym_list.size(); ++i)
+        cout << gym_list[i]->get_name() << "\n";
+
+    /*for(int i = 0; i < gym_list.size(); ++i)
         cout << gym_list[i] << " ";
     cout << "\n";
     for(int i = 0; i < trainer_list.size(); ++i)
@@ -246,11 +247,12 @@ int main()
     cout << "\n";
     for(int i = 0; i < clients.size(); ++i)
         cout << clients[i] << " ";
-    cout << "\n";
+    cout << "\n";*/
+
     in >> task;
     if(task == 1) find_trainer(clients, trainer_list);
     if(task == 2) find_gym(clients, gym_list);
-    if(task == 3) gym_advice();
+    if(task == 3) gym_advice(gym_list);
 
     return 0;
 }

@@ -26,7 +26,7 @@ struct too_many_clients : public exception
     }
 };
 
-void initialize_data(vector < gym * > &gym_list, vector < trainer > &trainer_list)
+void initialize_data(vector< unique_ptr < gym > > &gym_list, vector < trainer > &trainer_list)
 {
     string gym_type;
     int client_number, days_number, types_number, gym_number, trainer_number;
@@ -52,8 +52,7 @@ void initialize_data(vector < gym * > &gym_list, vector < trainer > &trainer_lis
                     gym_data.add_client(client);
                 }
 
-                boutique_gym *pointer = &gym_data;
-                gym_list.push_back(pointer);
+                gym_list.emplace_back(make_unique<boutique_gym>(gym_data));
             }
 
             if (gym_type == "Crossfit")
@@ -68,8 +67,7 @@ void initialize_data(vector < gym * > &gym_list, vector < trainer > &trainer_lis
                     gym_data.add_client(client);
                 }
 
-                gym *pointer = &gym_data;
-                gym_list.push_back(pointer);
+                gym_list.emplace_back(make_unique<crossfit_gym>(gym_data));
             }
 
             if (gym_type == "Powerlifting")
@@ -84,8 +82,7 @@ void initialize_data(vector < gym * > &gym_list, vector < trainer > &trainer_lis
                     gym_data.add_client(client);
                 }
 
-                gym *pointer = &gym_data;
-                gym_list.push_back(pointer);
+                gym_list.emplace_back(make_unique<powerlifting_gym>(gym_data));
             }
         }
         catch(too_many_clients &e)
@@ -149,7 +146,6 @@ bool comp1(trainer A, trainer B)
 
 void find_trainer(vector < client > clients, vector < trainer > trainer_list)
 {
-    bool gasit;
     vector < trainer > possible_trainers;
 
     for(int i = 0; i < clients.size(); ++i)
@@ -159,13 +155,21 @@ void find_trainer(vector < client > clients, vector < trainer > trainer_list)
 
         for(int j = 0; j < trainer_list.size(); ++j)
         {
+            bool gasit = 0;
+
             for(int k = 0; k < trainer_list[j].get_days().size(); ++k)
-                for(int l = 0; l < clients[i].get_days().size(); ++l)
-                    if(trainer_list[j].get_days()[k] == clients[i].get_days()[l])
-                    {
-                        ok = 1;
-                        possible_trainers.push_back(trainer_list[j]);
-                    }
+                if(gasit == 0)
+                {
+                    for(int l = 0; l < clients[i].get_days().size(); ++l)
+                        if(trainer_list[j].get_days()[k] == clients[i].get_days()[l])
+                        {
+                            ok = 1;
+                            possible_trainers.push_back(trainer_list[j]);
+                            gasit = 1;
+                            break;
+                        }
+                }
+
         }
 
         if(ok == 0)
@@ -176,11 +180,10 @@ void find_trainer(vector < client > clients, vector < trainer > trainer_list)
 
         sort(possible_trainers.begin(), possible_trainers.end(), comp1);
 
-        gasit = 0;
-
         try
         {
-            possible_trainers[0].add_client( clients[i]);
+            possible_trainers[0].add_client(clients[i]);
+            cout << clients[i].get_first_name() << " " << clients[i].get_last_name() << " chose " << possible_trainers[0].get_first_name() << " " << possible_trainers[0].get_last_name() << " as a trainer." << "\n";
         }
         catch(too_many_clients &e)
         {
@@ -190,14 +193,14 @@ void find_trainer(vector < client > clients, vector < trainer > trainer_list)
     }
 }
 
-bool comp2(gym * A, gym * B)
+bool comp2(gym A, gym B)
 {
-    return A->get_space() > B->get_space();
+    return A.get_space() > B.get_space();
 }
 
-void find_gym(vector < client > clients, vector < gym * > gym_list)
+void find_gym(vector < client > clients, vector< unique_ptr < gym > > &gym_list)
 {
-    vector < gym * > possible_gyms;
+    vector< gym > possible_gyms;
 
     for(int i = 0; i < clients.size(); ++i)
     {
@@ -208,7 +211,7 @@ void find_gym(vector < client > clients, vector < gym * > gym_list)
             if(clients[i].get_city() == gym_list[j]->get_address().get_city())
             {
                 ok = 1;
-                possible_gyms.push_back(gym_list[j]);
+                possible_gyms.emplace_back(*gym_list[j]);
             }
 
         if(ok == 0)
@@ -219,11 +222,11 @@ void find_gym(vector < client > clients, vector < gym * > gym_list)
 
         sort(possible_gyms.begin(), possible_gyms.end(), comp2);
 
-        cout << clients[i].get_first_name() << " " << clients[i].get_last_name() << " chose " << possible_gyms[0]->get_name() << " as their gym." << "\n";
+        cout << clients[i].get_first_name() << " " << clients[i].get_last_name() << " chose " << possible_gyms[0].get_name() << " as their gym." << "\n";
     }
 }
 
-void gym_advice(vector < gym * > gym_list)
+void gym_advice(vector< unique_ptr < gym > > &gym_list)
 {
     string gym_name;
 
@@ -237,9 +240,10 @@ void gym_advice(vector < gym * > gym_list)
         }
 }
 
+
 int main()
 {
-    vector < gym * > gym_list;
+    vector< unique_ptr < gym > > gym_list;
     vector < trainer > trainer_list;
     vector < client > clients;
     int task;
@@ -247,11 +251,8 @@ int main()
     initialize_data(gym_list, trainer_list);
     read_clients(clients);
 
-    for(int i = 0; i < gym_list.size(); ++i)
-        cout << gym_list[i]->get_name() << "\n";
-
     /*for(int i = 0; i < gym_list.size(); ++i)
-        cout << gym_list[i] << " ";
+        cout << *gym_list[i] << " ";
     cout << "\n";
     for(int i = 0; i < trainer_list.size(); ++i)
         cout << trainer_list[i] << " ";

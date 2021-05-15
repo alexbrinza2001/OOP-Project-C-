@@ -77,7 +77,7 @@ public:
 
     friend ostream& operator<< (ostream &cout, const gym &g);
 
-    friend istream& operator>> (istream &cin, gym &g);
+    friend istream& operator>> (istream &is, gym &g);
 
     gym &operator=(const gym &g);
 

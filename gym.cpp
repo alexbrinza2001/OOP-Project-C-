@@ -64,10 +64,10 @@ ostream& operator<< (ostream &cout, const gym &g)
     return cout;
 }
 
-istream& operator>> (istream &cin, gym &g)
+istream& operator>> (istream &is, gym &g)
 {
-    cin >> g.name >> g.address >> g.open_time >> g.close_time >> g.space;
-    return cin;
+    is >> g.name >> g.address >> g.open_time >> g.close_time >> g.space;
+    return is;
 }
 
 gym &gym::operator=(const gym &g)
@@ -84,7 +84,7 @@ gym &gym::operator=(const gym &g)
     return *this;
 }
 
-void gym :: total_income()
+void gym::total_income()
 {
     int total = 0;
 
@@ -94,7 +94,7 @@ void gym :: total_income()
 
 }
 
-void gym :: change_membership_price(int new_price)
+void gym::change_membership_price(int new_price)
 {
     membership_price = new_price;
 }

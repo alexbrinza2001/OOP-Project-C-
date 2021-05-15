@@ -25,7 +25,7 @@ int trainer::get_experience()
     return experience;
 }
 
-int trainer :: get_client_limit()
+int trainer::get_client_limit()
 {
     return client_limit;
 }

@@ -18,6 +18,14 @@
 
 ifstream in("input");
 
+struct too_many_clients : public exception
+{
+    const char * what () const throw ()
+    {
+        return "Too many clients";
+    }
+};
+
 void initialize_data(vector < gym * > &gym_list, vector < trainer > &trainer_list)
 {
     string gym_type;
@@ -32,7 +40,8 @@ void initialize_data(vector < gym * > &gym_list, vector < trainer > &trainer_lis
         in >> gym_type;
 
         try {
-            if (gym_type == "Boutique") {
+            if (gym_type == "Boutique")
+            {
                 boutique_gym gym_data;
 
                 in >> gym_data;
@@ -43,11 +52,12 @@ void initialize_data(vector < gym * > &gym_list, vector < trainer > &trainer_lis
                     gym_data.add_client(client);
                 }
 
-                gym *pointer = &gym_data;
+                boutique_gym *pointer = &gym_data;
                 gym_list.push_back(pointer);
             }
 
-            if (gym_type == "Crossfit") {
+            if (gym_type == "Crossfit")
+            {
                 crossfit_gym gym_data;
 
                 in >> gym_data;
@@ -62,7 +72,8 @@ void initialize_data(vector < gym * > &gym_list, vector < trainer > &trainer_lis
                 gym_list.push_back(pointer);
             }
 
-            if (gym_type == "Powerlifting") {
+            if (gym_type == "Powerlifting")
+            {
                 powerlifting_gym gym_data;
 
                 in >> gym_data;
@@ -77,7 +88,7 @@ void initialize_data(vector < gym * > &gym_list, vector < trainer > &trainer_lis
                 gym_list.push_back(pointer);
             }
         }
-        catch(exception &e)
+        catch(too_many_clients &e)
         {
             cout << e.what() << "\n";
         }
@@ -171,7 +182,7 @@ void find_trainer(vector < client > clients, vector < trainer > trainer_list)
         {
             possible_trainers[0].add_client( clients[i]);
         }
-        catch(exception &e)
+        catch(too_many_clients &e)
         {
             cout << e.what() << "\n";
         }

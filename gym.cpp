@@ -1,6 +1,7 @@
 #include "gym.h"
 #include "location.h"
 #include "clock_time.h"
+#include "too_many_clients.h"
 #include <iostream>
 #include <vector>
 #include <string>
@@ -31,8 +32,10 @@ int gym::get_space() {return space;}
 
 void gym::add_client(string client)
 {
+    too_many_clients limit;
+
     if(clients.size() == client_limit)
-        throw false;
+        throw limit;
 
     clients.push_back(client);
 }

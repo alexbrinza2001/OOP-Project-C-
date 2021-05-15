@@ -1,6 +1,7 @@
 #include "person.h"
 #include "trainer.h"
 #include "client.h"
+#include "too_many_clients.h"
 #include <iostream>
 #include <string>
 using namespace std;
@@ -138,8 +139,10 @@ istream& operator>> (istream &cin, trainer &t)
 
 void trainer::add_client(client c)
 {
+    too_many_clients limit;
+
     if(client_list.size() == client_limit)
-        throw false;
+        throw limit;
 
     client_list.push_back(c);
 }

@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include <memory>
 #include "location.h"
 #include "clock_time.h"
 #include "date.h"
@@ -14,15 +15,7 @@
 #include "boutique_gym.h"
 #include "crossfit_gym.h"
 #include "powerlifting_gym.h"
-#include <memory>
-
-struct too_many_clients : public exception
-{
-    const char * what () const throw ()
-    {
-        return "Too many clients";
-    }
-};
+#include "too_many_clients.h"
 
 void initialize_data(ifstream &in, vector< unique_ptr < gym > > &gym_list, vector < trainer > &trainer_list)
 {

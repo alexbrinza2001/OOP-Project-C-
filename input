@@ -212,6 +212,7 @@ Bucuresti
 2
 Monday
 Friday
+Upper_body
 Andrew
 Lincoln
 Iasi
@@ -219,17 +220,20 @@ Iasi
 Tuesday
 Friday
 Sunday
+Lower_body
 Norman
 Reedus
 Craiova
 1
 Thursday
+Full_body
 Lauren
 Cohan
 Bucuresti
 2
 Saturday
 Sunday
+Full_body
 John
 Travolta
 Brasov
@@ -237,4 +241,5 @@ Brasov
 Tuesday
 Wednesday
 Saturday
+Upper_body
 2

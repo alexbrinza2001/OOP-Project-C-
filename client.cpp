@@ -68,3 +68,8 @@ client &client::operator=(const client &c)
     return *this;
 }
 
+void client :: add_exercise(exercise e)
+{
+    exercises.push_back(e);
+}
+

@@ -16,6 +16,8 @@
 #include "crossfit_gym.h"
 #include "powerlifting_gym.h"
 #include "too_many_clients.h"
+#include "exercise_factory.h"
+#include "wrong_type.h"
 
 template <typename T>
 
@@ -119,6 +121,7 @@ void read_clients(ifstream &in, vector < client > &clients)
     client client_data;
     int days_number, client_count;
     string day;
+    string exercise_type;
 
     in >> client_count;
 
@@ -132,6 +135,43 @@ void read_clients(ifstream &in, vector < client > &clients)
             client_data.add_day(day);
         }
 
+        try {
+
+            in >> exercise_type;
+
+            if(exercise_type == "Upper_body")
+            {
+                client_data.add_exercise(exercise_factory::biceps());
+                client_data.add_exercise(exercise_factory::triceps());
+                client_data.add_exercise(exercise_factory::chest());
+                client_data.add_exercise(exercise_factory::shoulders());
+            }
+            else {
+                if(exercise_type == "Lower_body")
+                    {
+                        client_data.add_exercise(exercise_factory::calves());
+                        client_data.add_exercise(exercise_factory::hamstrings());
+                        client_data.add_exercise(exercise_factory::quads());
+                        client_data.add_exercise(exercise_factory::abdomen());
+                    }
+                else {
+                    if (exercise_type == "Full_body") {
+                        client_data.add_exercise(exercise_factory::biceps());
+                        client_data.add_exercise(exercise_factory::triceps());
+                        client_data.add_exercise(exercise_factory::chest());
+                        client_data.add_exercise(exercise_factory::shoulders());
+                        client_data.add_exercise(exercise_factory::calves());
+                        client_data.add_exercise(exercise_factory::hamstrings());
+                        client_data.add_exercise(exercise_factory::quads());
+                        client_data.add_exercise(exercise_factory::abdomen());
+                    } else throw wrong_type();
+                }
+                }
+                }
+        catch(wrong_type &w)
+        {
+            cout << w.what() << "\n";
+        }
         clients.push_back(client_data);
         client_data.remove_days();
     }

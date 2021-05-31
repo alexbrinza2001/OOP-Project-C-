@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include "exercise.h"
 using namespace std;
 
 class client {
@@ -11,6 +12,7 @@ class client {
     string last_name;
     vector < string > days_available;
     string city;
+    vector < exercise > exercises;
 
 public:
 
@@ -57,6 +59,8 @@ public:
     friend istream& operator>> (istream &cin, client &c);
 
     client &operator=(const client &c);
+
+    void add_exercise(exercise e);
 
 };
 

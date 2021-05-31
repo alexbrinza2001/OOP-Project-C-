@@ -38,13 +38,13 @@ public:
 
     void remove_days();
 
-    void set_first_name(string first);
+    void set_first_name(string &first);
 
-    void set_last_name(string last);
+    void set_last_name(string &last);
 
-    void set_city(string city);
+    void set_city(string &city);
 
-    void add_day(string day);
+    void add_day(string const &day);
 
     string get_first_name();
 
@@ -60,7 +60,7 @@ public:
 
     client &operator=(const client &c);
 
-    void add_exercise(exercise e);
+    void add_exercise(exercise const &e);
 
 };
 

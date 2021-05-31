@@ -11,7 +11,7 @@ public:
         change_membership_price(90);
     }
 
-    void pros_and_cons()
+    void pros_and_cons() override
     {
         cout << "Pros:" << "\n";
         cout << "Bone density improvements" << "\n";

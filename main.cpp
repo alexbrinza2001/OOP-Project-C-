@@ -11,7 +11,6 @@
 #include "gym.h"
 #include "exercise.h"
 #include "trainer.h"
-#include "client.h"
 #include "boutique_gym.h"
 #include "crossfit_gym.h"
 #include "powerlifting_gym.h"

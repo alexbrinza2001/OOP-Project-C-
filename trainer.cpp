@@ -1,6 +1,5 @@
 #include "person.h"
 #include "trainer.h"
-#include "client.h"
 #include "too_many_clients.h"
 #include <iostream>
 #include <string>
@@ -11,17 +10,17 @@ void trainer::add_experience(int e)
     experience += e;
 }
 
-void trainer::add_day(string d)
+void trainer::add_day(string &d)
 {
     days_available.push_back(d);
 }
 
-void trainer::add_type(string t)
+void trainer::add_type(string &t)
 {
     training_types.push_back(t);
 }
 
-int trainer::get_experience()
+int trainer::get_experience() const
 {
     return experience;
 }
@@ -46,9 +45,9 @@ void trainer::set_price(int price)
     price_per_hour = price;
 }
 
-int trainer::get_price() {return price_per_hour;}
+int trainer::get_price() const {return price_per_hour;}
 
-bool trainer::check_day(string day)
+bool trainer::check_day(string &day)
 {
     int ok = 0;
     int s = days_available.size();
@@ -72,7 +71,7 @@ void trainer::clear_types()
     training_types.clear();
 }
 
-bool trainer::check_type(string type)
+bool trainer::check_type(string &type)
 {
     int ok = 0;
     int s = training_types.size();
@@ -137,7 +136,7 @@ istream& operator>> (istream &is, trainer &t)
     return is;
 }
 
-void trainer::add_client(client c)
+void trainer::add_client(client &c)
 {
     if(client_list.size() == client_limit)
         throw too_many_clients();
@@ -150,7 +149,7 @@ int trainer::get_client_count()
     return client_list.size();
 }
 
-bool trainer :: operator >(trainer& t)
+bool trainer :: operator >(trainer& t) const
 {
     return ( (float) 1.0 * (float) this->get_experience() / 1.0 * this->get_price() ) < ( (float) 1.0 * (float) t.get_experience() / 1.0 * t.get_price() );
 }

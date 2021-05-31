@@ -3,25 +3,18 @@
 #include <string>
 using namespace std;
 
-ostream& operator<< (ostream &cout, const exercise &e)
+ostream& operator<< (ostream &os, const exercise &e)
 {
-    cout << "Exercise name: " << e.name << "\n";
-    cout << "Number of reps: " << e.reps << "\n";
-    cout << "Number of series: " << e.series;
-    return cout;
+    os << "Exercise name: " << e.name << "\n";
+    os << "Number of reps: " << e.reps << "\n";
+    os << "Number of series: " << e.series;
+    return os;
 }
 
-istream& operator>> (istream &cin, exercise &e)
+istream& operator>> (istream &is, exercise &e)
 {
-    cin >> e.name >> e.reps >> e.series;
-    return cin;
+    is >> e.name >> e.reps >> e.series;
+    return is;
 }
 
-exercise &exercise::operator=(const exercise &e)
-{
-    this->name = e.name;
-    this->reps = e.reps;
-    this->series = e.series;
-
-    return *this;
-}
+exercise &exercise::operator=(const exercise &e) = default;

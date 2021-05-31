@@ -13,39 +13,21 @@ protected:
     string first_name;
     string last_name;
     string gender;
-    int age;
+    int age = 0;
     date birth_date;
     location residence;
 
 public:
 
-    person() {
-        first_name = last_name = gender = "";
-        age = 0;
-        birth_date.add_date(0, 0, 0);
-        residence.add_country("");
-        residence.add_city("");
-        residence.add_address("", 0);
-    }
+    person() = default;
 
-    person(string _first, string _last, string _gender, int _age, date _birth, location _residence) {
-        first_name = _first;
-        last_name = _last;
-        gender = _gender;
-        age = _age;
-        birth_date = _birth;
-        residence = _residence;
-    }
+    void add_name(string &first, string &last);
 
-    void add_name(string first, string last);
-
-    void add_gender(string _gender);
+    void add_gender(string &Gender);
 
     void add_age(int _age);
 
     void add_date(date birth);
-
-    void add_residence(location _residence);
 
     string get_first_name();
 
@@ -53,7 +35,7 @@ public:
 
     string get_gender();
 
-    int get_age();
+    int get_age() const;
 
     date get_birth();
 

@@ -14,19 +14,13 @@ public:
         day = month = year = 0;
     }
 
-    date(int _day, int _month, int _year) {
-        day = _day;
-        month = _month;
-        year = _year;
-    }
-
     void add_date(int _day, int _month, int _year);
 
-    int get_day();
+    int get_day() const;
 
-    int get_month();
+    int get_month() const;
 
-    int get_year();
+    int get_year() const;
 
     friend ostream& operator<< (ostream &cout, const date &d);
 

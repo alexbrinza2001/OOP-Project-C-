@@ -17,11 +17,11 @@ public:
         number = 0;
     }
 
-    void add_country(string _country);
+    void add_country(string &Country);
 
-    void add_city(string _city);
+    void add_city(string &City);
 
-    void add_address(string _street, int _number);
+    void add_address(string &Street, int &Number);
 
     string get_country();
 
@@ -29,7 +29,7 @@ public:
 
     string get_street();
 
-    int get_number();
+    int get_number() const;
 
     friend ostream& operator<< (ostream &cout, const location &place);
 

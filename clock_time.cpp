@@ -9,34 +9,21 @@ void clock_time::add_time(int _hour, int _minutes, int _seconds)
     seconds = _seconds;
 }
 
-int clock_time::get_hour() {return hour;}
-
-int clock_time::get_minutes() {return minutes;}
-
-int clock_time::get_seconds() {return seconds;}
-
-ostream& operator<< (ostream &cout, const clock_time &time)
+ostream& operator<< (ostream &os, const clock_time &time)
 {
-    cout << "Ora " << time.hour << ":";
+    os << "Ora " << time.hour << ":";
     if(time.minutes < 10)
-        cout << 0 << time.minutes << ":";
+        os << 0 << time.minutes << ":";
     if(time.seconds < 10)
-        cout << 0 << time.seconds;
-    return cout;
+        os << 0 << time.seconds;
+    return os;
 }
 
-istream& operator>> (istream &cin, clock_time &time)
+istream& operator>> (istream &is, clock_time &time)
 {
-    cin >> time.hour >> time.minutes >> time.seconds;
-    return cin;
+    is >> time.hour >> time.minutes >> time.seconds;
+    return is;
 }
 
-clock_time &clock_time::operator=(const clock_time &time)
-{
-    this->hour = time.hour;
-    this->minutes = time.minutes;
-    this->seconds = time.seconds;
-
-    return *this;
-}
+clock_time &clock_time::operator= (const clock_time &time) = default;
 

@@ -4,29 +4,22 @@ using namespace std;
 
 void date::add_date(int _day, int _month, int _year) {day = _day; month = _month; year = _year;}
 
-int date::get_day() {return day;}
+int date::get_day() const {return day;}
 
-int date::get_year() {return year;}
+int date::get_year() const {return year;}
 
-int date::get_month() {return month;}
+int date::get_month() const {return month;}
 
-ostream& operator<< (ostream &cout, const date &d)
+ostream& operator<< (ostream &os, const date &d)
 {
-    cout << "Date: " << d.day << "-" << d.month << "-" << d.year;
-    return cout;
+    os << "Date: " << d.day << "-" << d.month << "-" << d.year;
+    return os;
 }
 
-istream& operator>> (istream &cin, date &d)
+istream& operator>> (istream &is, date &d)
 {
-    cin >> d.day >> d.month >> d.year;
-    return cin;
+    is >> d.day >> d.month >> d.year;
+    return is;
 }
 
-date &date::operator=(const date &d)
-{
-    this->day = d.day;
-    this->month = d.month;
-    this->year = d.year;
-
-    return *this;
-}
+date &date::operator=(const date &d) = default;

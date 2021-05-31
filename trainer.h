@@ -9,8 +9,8 @@ using namespace std;
 
 class trainer : public person{
 
-    int experience;
-    int price_per_hour;
+    int experience = 0;
+    int price_per_hour = 0;
     vector < string > days_available;
     vector < string > training_types;
     vector < client > client_list;
@@ -19,23 +19,12 @@ class trainer : public person{
 
 public:
 
-    trainer()
-    {
-        first_name = last_name = gender = "";
-        age = 0;
-        birth_date.add_date(0, 0, 0);
-        residence.add_country("");
-        residence.add_city("");
-        residence.add_address("", 0);
-        experience = 0;
-        price_per_hour = 0;
-        gym_name = "";
-    }
+    trainer() = default;
 
-    trainer(int _experience, int _price_per_hour, vector < string > d, vector < string > t, string _gym_name)
+    trainer(int Experience, int Price_per_hour, vector < string > d, vector < string > t, string &Gym_name)
     {
-        experience = _experience;
-        price_per_hour = _price_per_hour;
+        experience = Experience;
+        price_per_hour = Price_per_hour;
         int s = d.size();
         days_available.clear();
         for(int i = 0; i < s; ++i)
@@ -44,22 +33,22 @@ public:
         training_types.clear();
         for(int i = 0; i < s; ++i)
             training_types.push_back(t[i]);
-        gym_name = _gym_name;
+        gym_name = Gym_name;
     }
 
     void add_experience(int e);
 
-    void add_day(string day);
+    void add_day(string &day);
 
-    void add_type(string type);
+    void add_type(string &type);
 
     void set_price(int price);
 
-    int get_experience();
+    int get_experience() const;
 
-    int get_price();
+    int get_price() const;
 
-    int get_client_limit();
+    int static get_client_limit();
 
     void clear_days();
 
@@ -71,9 +60,9 @@ public:
 
     string get_gym();
 
-    bool check_day(string day);
+    bool check_day(string &day);
 
-    bool check_type(string type);
+    bool check_type(string &type);
 
     friend ostream& operator<< (ostream &cout, const trainer &t);
 
@@ -81,11 +70,11 @@ public:
 
     trainer &operator=(const trainer &t);
 
-    void add_client(client c);
+    void add_client(client &c);
 
     int get_client_count();
 
-    bool operator >(trainer& t);
+    bool operator >(trainer& t) const;
 };
 
 #endif

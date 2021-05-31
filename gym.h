@@ -13,49 +13,28 @@ class gym{
     clock_time open_time;
     clock_time close_time;
     vector < string > clients;
-    int space;
+    int space = 0;
     int membership_price = 130;
     static const int client_limit = 20;
 
 public:
 
-    gym()
-    {
-        address.add_country("");
-        address.add_city("");
-        address.add_address("", 0);
-        open_time.add_time(0, 0, 0);
-        close_time.add_time(0, 0, 0);
-        space = 0;
-        name = "";
-    }
+    gym() = default;
 
-    gym(string _name, location _address, clock_time open, clock_time close, vector < string > _clients, int _space)
+    gym(string &Name, location &Address, clock_time &open, clock_time &close, vector < string > &Clients, int &Space)
     {
-        name = _name;
-        address = _address;
+        name = Name;
+        address = Address;
         open_time = open;
         close_time = close;
         clients.clear();
-        int s = _clients.size();
+        int s = Clients.size();
         for(int i = 0; i < s; ++i)
-            clients.push_back(_clients[i]);
-        space = _space;
+            clients.push_back(Clients[i]);
+        space = Space;
     }
 
-    ~gym()
-    {
-        address.add_country("");
-        address.add_city("");
-        address.add_address("", 0);
-        open_time.add_time(0, 0, 0);
-        close_time.add_time(0, 0, 0);
-        space = 0;
-        name = "";
-        clients.clear();
-    }
-
-    void set_gym(string _name, location _address, clock_time open, clock_time close, vector < string > _clients, int _space);
+    virtual ~gym() = default;
 
     string get_name();
 
@@ -67,13 +46,11 @@ public:
 
     clock_time get_close();
 
-    int get_space();
+    int get_space() const;
 
-    void set_name(string _name);
+    void add_client(string &client);
 
-    void add_client(string client);
-
-    bool search_client(string client);
+    bool search_client(string &client);
 
     friend ostream& operator<< (ostream &cout, const gym &g);
 
@@ -87,7 +64,7 @@ public:
 
     virtual void pros_and_cons();
 
-    bool operator >(gym& g);
+    bool operator >(gym& g) const;
 
 };
 

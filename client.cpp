@@ -4,22 +4,22 @@
 #include <vector>
 using namespace std;
 
-void client::set_first_name(string first)
+void client::set_first_name(string &first)
 {
     first_name = first;
 }
 
-void client::set_last_name(string last)
+void client::set_last_name(string &last)
 {
     last_name = last;
 }
 
-void client::set_city(string _city)
+void client::set_city(string &City)
 {
-    city = _city;
+    city = City;
 }
 
-void client::add_day(string const day)
+void client::add_day(string const &day)
 {
     days_available.push_back(day);
 }
@@ -68,7 +68,7 @@ client &client::operator=(const client &c)
     return *this;
 }
 
-void client :: add_exercise(exercise e)
+void client :: add_exercise(exercise const &e)
 {
     exercises.push_back(e);
 }

@@ -1,24 +1,8 @@
 #include "gym.h"
-#include "location.h"
-#include "clock_time.h"
 #include "too_many_clients.h"
 #include <iostream>
-#include <vector>
 #include <string>
 using namespace std;
-
-void gym::set_gym(string _name, location _address, clock_time open, clock_time close, vector < string > _clients, int _space)
-{
-    name = _name;
-    address = _address;
-    open_time = open;
-    close_time = close;
-    clients.clear();
-    int s = _clients.size();
-    for(int i = 0; i < s; ++i)
-        clients.push_back(_clients[i]);
-    space = _space;
-}
 
 location gym::get_address() {return address;}
 
@@ -28,9 +12,9 @@ clock_time gym::get_close() {return close_time;}
 
 string gym::get_name() {return name;}
 
-int gym::get_space() {return space;}
+int gym::get_space() const{return space;}
 
-void gym::add_client(string client)
+void gym::add_client(string &client)
 {
     if(clients.size() == client_limit)
         throw too_many_clients();
@@ -43,26 +27,26 @@ void gym::remove_clients()
     clients.clear();
 }
 
-bool gym::search_client(string client)
+bool gym::search_client(string &client)
 {
     int s = clients.size();
     for(int i = 0; i < s; ++i)
-        if(clients[i] == client) return 1;
-    return 0;
+        if(clients[i] == client) return true;
+    return false;
 }
 
-ostream& operator<< (ostream &cout, const gym &g)
+ostream& operator<< (ostream &os, const gym &g)
 {
-    cout << "Name: " << g.name << "\n";
-    cout << "Address" << "\n" << g.address << "\n";
-    cout << "Program: " << g.open_time << " - " << g.close_time << "\n";
-    cout << "Space: " << g.space << "\n";
-    cout << "Client list: ";
+    os << "Name: " << g.name << "\n";
+    os << "Address" << "\n" << g.address << "\n";
+    os << "Program: " << g.open_time << " - " << g.close_time << "\n";
+    os << "Space: " << g.space << "\n";
+    os << "Client list: ";
     for(int i = 0; i < g.clients.size(); ++i)
-        cout << g.clients[i] << " ";
-    cout << "\n";
+        os << g.clients[i] << " ";
+    os << "\n";
 
-    return cout;
+    return os;
 }
 
 istream& operator>> (istream &is, gym &g)
@@ -87,9 +71,9 @@ gym &gym::operator=(const gym &g)
 
 void gym::total_income()
 {
-    int total = 0;
+    int total;
 
-    total = clients.size() * membership_price;
+    total = (int) clients.size() * membership_price;
 
     cout << "The gym " << name << " " << "has a total income of " << total << " ron" << "\n";
 
@@ -111,7 +95,7 @@ void gym :: pros_and_cons()
     cout << "A gym is a communal space where everyone is expected to train in peace. That’s hard to do when there’s no equipment available. Or when your favorite class is full. Overcrowding can be an annoyance that dampens your entire experience. Unfortunately, there are only two solutions: adjust your schedule or move to a different facility." << "\n";
 }
 
-bool gym :: operator >(gym& g)
+bool gym :: operator >(gym& g) const
 {
     return this->get_space() > g.get_space();
 }

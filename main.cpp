@@ -17,6 +17,13 @@
 #include "powerlifting_gym.h"
 #include "too_many_clients.h"
 
+template <typename T>
+
+bool compare(T A, T B)
+{
+    return A > B;
+}
+
 void initialize_data(ifstream &in, vector< unique_ptr < gym > > &gym_list, vector < trainer > &trainer_list)
 {
     string gym_type;
@@ -119,7 +126,7 @@ void read_clients(ifstream &in, vector < client > &clients)
     {
         in >> client_data;
         in >> days_number;
-        for(int i = 0; i < days_number; ++i)
+        for(int j = 0; j < days_number; ++j)
         {
             in >> day;
             client_data.add_day(day);
@@ -128,11 +135,6 @@ void read_clients(ifstream &in, vector < client > &clients)
         clients.push_back(client_data);
         client_data.remove_days();
     }
-}
-
-bool comp1(trainer A, trainer B)
-{
-    return ( (float) 1.0 * A.get_experience() / 1.0 * A.get_price() ) < ( (float) 1.0 * B.get_experience() / 1.0 * B.get_price() );
 }
 
 void find_trainer(vector < client > clients, vector < trainer > trainer_list)
@@ -146,7 +148,7 @@ void find_trainer(vector < client > clients, vector < trainer > trainer_list)
 
         for(int j = 0; j < trainer_list.size(); ++j)
         {
-            bool gasit = 0;
+            bool gasit = false;
 
             for(int k = 0; k < trainer_list[j].get_days().size(); ++k)
                 if(gasit == 0)
@@ -156,7 +158,7 @@ void find_trainer(vector < client > clients, vector < trainer > trainer_list)
                         {
                             ok = 1;
                             possible_trainers.push_back(trainer_list[j]);
-                            gasit = 1;
+                            gasit = true;
                             break;
                         }
                 }
@@ -169,7 +171,7 @@ void find_trainer(vector < client > clients, vector < trainer > trainer_list)
             continue;
         }
 
-        sort(possible_trainers.begin(), possible_trainers.end(), comp1);
+        sort(possible_trainers.begin(), possible_trainers.end(), compare<trainer>);
 
         try
         {
@@ -182,11 +184,6 @@ void find_trainer(vector < client > clients, vector < trainer > trainer_list)
         }
 
     }
-}
-
-bool comp2(gym A, gym B)
-{
-    return A.get_space() > B.get_space();
 }
 
 void find_gym(vector < client > clients, vector< unique_ptr < gym > > &gym_list)
@@ -211,7 +208,7 @@ void find_gym(vector < client > clients, vector< unique_ptr < gym > > &gym_list)
             continue;
         }
 
-        sort(possible_gyms.begin(), possible_gyms.end(), comp2);
+        sort(possible_gyms.begin(), possible_gyms.end(), compare<gym>);
 
         cout << clients[i].get_first_name() << " " << clients[i].get_last_name() << " chose " << possible_gyms[0].get_name() << " as their gym." << "\n";
     }

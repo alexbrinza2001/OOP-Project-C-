@@ -149,3 +149,8 @@ int trainer::get_client_count()
 {
     return client_list.size();
 }
+
+bool trainer :: operator >(trainer& t)
+{
+    return ( (float) 1.0 * (float) this->get_experience() / 1.0 * this->get_price() ) < ( (float) 1.0 * (float) t.get_experience() / 1.0 * t.get_price() );
+}

@@ -8,7 +8,7 @@ class too_many_clients : public exception
 
 public:
 
-    const char * what () const noexcept
+    const char * what() const noexcept override
     {
         return "Too many clients";
     }

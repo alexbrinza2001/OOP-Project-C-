@@ -87,6 +87,8 @@ public:
 
     virtual void pros_and_cons();
 
+    bool operator >(gym& g);
+
 };
 
 #endif

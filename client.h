@@ -18,7 +18,7 @@ public:
         first_name = last_name = city = "";
     }
 
-    client(string first, string last, vector < string > days, string _city)
+    client(string &first, string &last, vector < string > days, string &_city)
     {
         first_name = first;
         last_name = last;

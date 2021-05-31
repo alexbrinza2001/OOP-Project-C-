@@ -17,13 +17,6 @@ public:
         number = 0;
     }
 
-    location(string _country, string _city, string _street, int _number) {
-        country = _country;
-        city = _city;
-        street = _street;
-        number = _number;
-    }
-
     void add_country(string _country);
 
     void add_city(string _city);

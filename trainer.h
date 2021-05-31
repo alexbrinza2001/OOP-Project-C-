@@ -84,6 +84,8 @@ public:
     void add_client(client c);
 
     int get_client_count();
+
+    bool operator >(trainer& t);
 };
 
 #endif

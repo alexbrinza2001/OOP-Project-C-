@@ -19,7 +19,7 @@ void client::set_city(string _city)
     city = _city;
 }
 
-void client::add_day(string day)
+void client::add_day(string const day)
 {
     days_available.push_back(day);
 }
@@ -37,22 +37,22 @@ void client::remove_days()
     days_available.clear();
 }
 
-ostream& operator<< (ostream &cout, const client &c)
+ostream& operator<< (ostream &os, const client &c)
 {
-    cout << "Name: " << c.first_name << " " << c.last_name << "\n";
-    cout << "City: " << c.city << "\n";
-    cout << "Days available: ";
+    os << "Name: " << c.first_name << " " << c.last_name << "\n";
+    os << "City: " << c.city << "\n";
+    os << "Days available: ";
     int s = c.days_available.size();
     for(int i = 0; i < s; ++i)
-        cout << c.days_available[i] << " ";
-    cout << "\n";
-    return cout;
+        os << c.days_available[i] << " ";
+    os << "\n";
+    return os;
 }
 
-istream& operator>> (istream &cin, client &c)
+istream& operator>> (istream &is, client &c)
 {
-    cin >> c.first_name >> c.last_name >> c.city;
-    return cin;
+    is >> c.first_name >> c.last_name >> c.city;
+    return is;
 }
 
 client &client::operator=(const client &c)

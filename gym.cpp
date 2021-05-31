@@ -110,3 +110,8 @@ void gym :: pros_and_cons()
     cout << "Lack of transportation could keep you from the gym and your fitness goals. Public transit is an alternative but it may put a dent in your bank account. There’s also the weather, which can be an unpredictable distraction. It’s hard to stay motivated with six feet of snow outside your door." << "\n";
     cout << "A gym is a communal space where everyone is expected to train in peace. That’s hard to do when there’s no equipment available. Or when your favorite class is full. Overcrowding can be an annoyance that dampens your entire experience. Unfortunately, there are only two solutions: adjust your schedule or move to a different facility." << "\n";
 }
+
+bool gym :: operator >(gym& g)
+{
+    return this->get_space() > g.get_space();
+}

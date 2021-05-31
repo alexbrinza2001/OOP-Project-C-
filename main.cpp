@@ -19,7 +19,7 @@
 
 template <typename T>
 
-bool compare(T A, T B)
+bool compare(T &A, T &B)
 {
     return A > B;
 }
